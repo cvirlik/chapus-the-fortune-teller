@@ -1,10 +1,14 @@
 import { Bot } from "grammy";
-import { TOKEN } from "./constans/Constants.js";
 import 'dotenv/config'
 import { connect } from "./database.js";
 import { randomInt } from "crypto";
 
-const bot = new Bot(TOKEN);
+const token = process.env.TOKEN
+if (!token){
+    console.error("No token provided. Set the environment variable 'TOKEN'");
+    process.exit(1);
+}
+const bot = new Bot(token);
 const {collection} = await connect();
 
 function getLuckValue(): number {
