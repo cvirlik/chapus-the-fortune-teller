@@ -31,12 +31,12 @@ const luckMessages: { [key: string]: string[] } = {
       "No luck today. Just like my weary bones. Thrilling, isn't it?",
       "Luck remains dull, as dull as my morning grump. Lovely."
     ],
-    "+1": [
+    "1": [
       "A small boost in luck, don’t get too excited. It’s as rare as a quiet day.",
       "Your luck improved a little, like a slight breeze on my old staff. Happy now?",
       "A minor lucky break, not that I care. Don’t thank me."
     ],
-    "+2": [
+    "2": [
       "Twice the luck? Enjoy it while it lasts, you lucky fool. Not that I care.",
       "Your luck has doubled, shining brighter than my ancient lantern. Don't expect it to stay.",
       "Double fortune, eh? Like finding an extra stone in my old pouch. Don't get too happy."
