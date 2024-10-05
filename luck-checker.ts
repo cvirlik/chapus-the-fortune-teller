@@ -2,6 +2,7 @@ import { Bot } from "grammy";
 import 'dotenv/config'
 import { connect } from "./database.js";
 import { randomInt } from "crypto";
+import { setTimeout } from "timers/promises";
 
 const token = process.env.TOKEN
 if (!token){
@@ -56,6 +57,7 @@ bot.chatType(["supergroup", "private"]).command("foresee_please", async (ctx) =>
     } else {
         const luck = getLuckValue();
         await ctx.reply(`Tssss human, let my magic orb analyze your day...`)
+        await setTimeout(1_500)
         const luckValue = process.env[luck];
         if (!luckValue) {
           throw new Error(`No video found for luck value ${luck}`);
