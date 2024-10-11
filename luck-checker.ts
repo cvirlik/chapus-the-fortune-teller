@@ -13,7 +13,7 @@ const bot = new Bot(token);
 const {collection} = await connect();
 
 function getLuckValue(): number {
-    return randomInt(-2, 2)
+    return randomInt(-2, 3)
 }
 
 const luckMessages: { [key: string]: string[] } = {
@@ -62,7 +62,7 @@ bot.chatType(["supergroup", "private"]).command("foresee_please", async (ctx) =>
         if (!luckValue) {
           throw new Error(`No video found for luck value ${luck}`);
         }
-        const message = luckMessages[luck][randomInt(0, (luckMessages[luck].length - 1))]
+        const message = luckMessages[luck][randomInt(0, luckMessages[luck].length)]
         await ctx.replyWithVideo(luckValue, {
             caption: `<a href="tg://user?id=${ctx.from.id}">${ctx.from.first_name}</a>, my magic orb spoke! ${message}`,
             parse_mode: "HTML"
