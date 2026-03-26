@@ -1,0 +1,29 @@
+services:
+  fortune_db:
+    image: docker.io/library/mongo:7
+    restart: unless-stopped
+    volumes:
+      - fortune-mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand({ ping: 1 })"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  fortune_bot:
+    build:
+      context: .
+      dockerfile: Containerfile
+    restart: unless-stopped
+    depends_on:
+      fortune_db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      MONGODB_URI: mongodb://fortune_db:27017
+    init: true
+
+volumes:
+  fortune-mongo-data:
