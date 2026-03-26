@@ -16,6 +16,21 @@ function getLuckValue(): number {
     return randomInt(-2, 3)
 }
 
+function getVideoEnvValue(luck: number): string | undefined {
+    const keys = luck < 0
+        ? [`VIDEO_${luck}`, `VIDEO_NEG${Math.abs(luck)}`]
+        : [`VIDEO_${luck}`];
+
+    for (const key of keys) {
+        const value = process.env[key];
+        if (value) {
+            return value;
+        }
+    }
+
+    return undefined;
+}
+
 const luckMessages: { [key: string]: string[] } = {
     "-2": [
       "Hmph! Your luck has plummeted twice, just like my old broom falling apart. Couldn't ask for worse.",
@@ -58,9 +73,9 @@ bot.chatType(["supergroup", "private"]).command("foresee_please", async (ctx) =>
         const luck = getLuckValue();
         await ctx.reply(`Tssss human, let my magic orb analyze your day...`)
         await setTimeout(1_500)
-        const luckValue = process.env[luck];
+        const luckValue = getVideoEnvValue(luck);
         if (!luckValue) {
-          throw new Error(`No video found for luck value ${luck}`);
+          throw new Error(`No video found for luck value ${luck}. Set VIDEO_${luck} (or VIDEO_NEG${Math.abs(luck)} for negatives).`);
         }
         const message = luckMessages[luck][randomInt(0, luckMessages[luck].length)]
         await ctx.replyWithVideo(luckValue, {
